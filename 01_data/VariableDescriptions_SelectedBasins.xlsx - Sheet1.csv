@@ -1,0 +1,117 @@
+,,Available by individual water year?
+LatGauge,Latitude at the outlet of the river basin (at the USGS streamflow gauge location),
+LonGauge,Longitude at the outlet of the river basin (at the USGS streamflow gauge location),
+GAGEID,USGS streamflow gauge ID for basin,
+FittedSlope,"Slope of fitted line (least-squares) between basin-averaged Nov 1 total soil moisture and basin-averaged total soil moisture at peak SWE, average for WY 1965-2018 [unit: mm/day]",Y
+FittedIntercept,"Intercept of fitted line (least-squares) between basin-averaged total soil moisture at peak SWE and basin-averaged Apr 1 total soil moisture, average for WY 1965-2018 [unit: mm]",Y
+Slope,"Computed winter soil moisture slope: (basin-averaged total soil moisture at peak SWE - basin-averaged Nov 1 total soil moisture )/(number of days between Nov 1 to Apr 1), average for WY 1965-2018 [unit: mm/day]",Y
+Nov1SM,"Basin-averaged total soil moisture on Nov 1, average for WY 1965-2018 [unit: mm]",Y
+MeanWinterSM,"Basin-averaged average total soil moisture over the winter (NDJFM), average for WY 1965-2018",Y
+TheilSenSlope,"Theil-Sen estimator for line between basin-averaged Nov 1 total soil moisture and total soil moisture on day of peak SWE, average for WY 1965-2018 [unit: mm/day]",Y
+SpringRunoffVIC,"Basin-averaged total observed spring runoff from VIC model, from date of peak SWE to July 31, average for WY 1965-2018 [unit: mm]. (Average grid-cell VIC runoff)",Y
+SpringRunoffRatioVIC,"Spring runoff ratio: basin-averaged total spring runoff  from VIC (date of peak SWE to July 31) / basin-averaged total winter and spring precipitation (NDJFMAJ), average for WY 1965-2018 [unit: none]",Y
+AvgWinterTemp,"Basin-averaged average temperature over winter (NDJFM), average for WY 1965-2018 [unit: degrees C]",Y
+AvgAnnualTemp,"Basin-averaged average temperature over the water year, average for WY 1965-2018 [unit: degrees C]",Y
+PeakSWE,"Basin-averaged peak SWE over water year, average for WY 1965-2018 [unit: mm]",Y
+WinterPrecip,"Basin-averaged total winter precipitation (NDJFM), average for WY 1965-2018 [unit: mm]",Y
+SpringPrecip,"Basin-averaged total spring precipitation (AMJ), average for WY 1965-2018 [unit: mm]",Y
+PeakSWE_PrecipRatio,Snow-to-rainfall ratio: defined as basin-averaged peak SWE over the time frame ONDJFM / basin-averaged precipitation over ONDJFM; average for WY 1965-2018 [unit: none],Y
+Apr1SWE,"Basin-averaged SWE on April 1 of each water year, average for WY 1965-2018 [unit: mm]",Y
+MeanOctSM,"Basin-averaged mean soil moisture over the month of October, average for WY 1965-2018 [unit: mm]",Y
+MeanNovSM,"Basin-averaged mean soil moisture over the month of November, average for WY 1965-2018 [unit: mm]",Y
+MeanDOWYPeakSWE,Average day of water year when peak SWE occurs,Y
+NovTemp,"Basin-averaged average temperature over the month of November, average for WY 1965-2018 [unit: degrees C]",Y
+DecTemp,"Basin-averaged average temperature over the month of December, average for WY 1965-2018 [unit: degrees C]",Y
+JanTemp,"Basin-averaged average temperature over the month of January, average for WY 1965-2018 [unit: degrees C]",Y
+FebTemp,"Basin-averaged average temperature over the month of February, average for WY 1965-2018 [unit: degrees C]",Y
+NovSWE,"Basin-averaged average SWE over the month of November, average for WY 1965-2018 [unit: mm]",Y
+DecSWE,"Basin-averaged average SWE over the month of December, average for WY 1965-2018 [unit: mm]",Y
+JanSWE,"Basin-averaged average SWE over the month of January, average for WY 1965-2018 [unit: mm]",Y
+JanSM,"Basin-averaged average total soil moisture over the month of January, average for WY 1965-2018 [unit: mm]",Y
+TheilSenSlopeSpring,"Theil-Sen estimator for line between basin-averaged total soil moisture at peak SWE and basin-averaged total soil moisture on July 31st, average for WY 1965-2018 [unit: mm/day]",Y
+SlopeSpring,"Slope of fitted line (least-squares) between basin-averaged total soil moisture at peak SWE and basin-averaged total soil moisture on July 31st, average for WY 1965-2018 [unit: mm/day]",Y
+VolSMChangeWint,"Change in soil moisture from Nov 1 to day of peak SWE, average for WY 1965-2018 [mm]",Y
+VolSMChangeSp,"Change in soil moisture from day of peak SWE to end of July, average for WY 1965-2018 [mm]",Y
+SM_DOWYPeakSWE,"Basin averaged total soil moisture on day of peak SWE, over WY 1965-2018 [mm]",Y
+VolSMChangeSpringPSWE,"Change in soil moisture from day of peak SWE to 80 days after peak SWE, average for WY 1965-2018 [mm]",Y
+July31SM,"Basin averaged total soil moisture on July 31st, over WY 1965-2018 [mm]",Y
+SpringRunoffPSWE_VIC,"Basin averaged total VIC runoff from date of peak SWE to end of July, over WY 1965-2018 [mm]",Y
+SpringPrecipPSWE,"Basin averaged total VIC precipitation from date of peak SWE to end of July, over WY 1965-2018 [mm]",Y
+WinterPrecipPSWE,"Basin averaged total VIC precipitation from October 1st to date of peak SWE, over WY 1965-2018 [mm]",Y
+SpringEvapPSWE,"Basin averaged total VIC evaporation from date of peak SWE to end of July, over WY 1965-2018 [mm]",Y
+SpringBaseflowPSWE,"Basin averaged total VIC baseflow from date of peak SWE to end of July, over WY 1965-2018 [mm]",Y
+OctPrecip,"Basin averaged total VIC precipitation from Oct 1 to Oct 31, over WY 1965-2018 [mm]",Y
+NovPrecip,"Basin averaged total VIC precipitation from Nov 1 to Nov 30, over WY 1965-2018 [mm]",Y
+DecPrecip,"Basin averaged total VIC precipitation from Dec 1 to Dec 31, over WY 1965-2018 [mm]",Y
+JanPrecip,"Basin averaged total VIC precipitation from Jan 1 to Jan 30, over WY 1965-2018 [mm]",Y
+FebPrecip,"Basin averaged total VIC precipitation from Feb 1 to Feb 28, over WY 1965-2018 [mm]",Y
+MarPrecip,"Basin averaged total VIC precipitation from Mar 1 to Mar 31, over WY 1965-2018 [mm]",Y
+AprPrecip,"Basin averaged total VIC precipitation from Apr 1 to Apr 30, over WY 1965-2018 [mm]",Y
+MayPrecip,"Basin averaged total VIC precipitation from May 1 to May 31, over WY 1965-2018 [mm]",Y
+JunPrecip,"Basin averaged total VIC precipitation from Jun 1 to Jun 30, over WY 1965-2018 [mm]",Y
+JulPrecip,"Basin averaged total VIC precipitation from Jul 1 to Jul 31, over WY 1965-2018 [mm]",Y
+Dec1SM,"Basin-averaged total soil moisture on Dec 1, average for WY 1965-2018 [unit: mm]",Y
+Jan1SM,"Basin-averaged total soil moisture on Jan 1, average for WY 1965-2018 [unit: mm]",Y
+Feb1SM,"Basin-averaged total soil moisture on Feb 1, average for WY 1965-2018 [unit: mm]",Y
+Mar1SM,"Basin-averaged total soil moisture on Mar 1, average for WY 1965-2018 [unit: mm]",Y
+Apr1SM,"Basin-averaged total soil moisture on Apr 1, average for WY 1965-2018 [unit: mm]",Y
+FirstDayBelow0Temp,First day of the water year when  3-day moving average air temperature is  <= 0  degree C for 7 consecutive days (this day + 6 days later). NA value means that this criteria is not met.,Y
+NumbDaysBelow0Temp,Total number of days where 3-day moving average air temperature is below 0 degree C. NA value means this criteria is not met.,Y
+MaxConsDaysBelow0Temp,Maximum consecutive days when 30day moving average air temperature is below 0 degree C. NA value means this criteria is not met.,Y
+FirstDayAbove0Temp,"First day fo the water year when 3-day moving average temperature is  >  0  degree C for 7 consecutive days (this day + 6 days later), as long as it occurs after 'FirstDayBelow0Temp'. NA value means that this criteria is not met.",Y
+SM_0TempDay,Total basin-averaged soil moisture on 'FirstDayBelow0Temp' [mm],Y
+SM_PosTempDay,Total basin-averaged soil moisture on 'FirstDayAbove0Temp' [mm],Y
+CorrNov1SM_RR,Correlation of basin-averaged Nov 1 total soil moisture with observed spring runoff ratio over WY 1965-2018,
+PValue_CorrNov1SMRR,P-value for CorrNov1SM_RR. Significant correlations have p-value < 0.05,
+CorrNov1SM_SR,Correlation of Nov 1 total soil moisture with observed spring runoff over WY 1965-2018,
+PValue_CorrNov1SMSR,P-value for CorrNov1SM_SR. Significant correlations have p-value < 0.05,
+CorrOctSM_RR,Correlation of basin-averaged mean October total soil moisture with observed spring runoff ratio over WY 1965-2018,
+PValue_CorrOctSMRR,P-value for CorrOctSM_RR. Significant correlations have p-value < 0.05,
+CorrOctSM_SR,Correlation of basin-averaged mean October total soil moisture with observed spring runoff over WY 1965-2018,
+PValue_CorrOctSMSR,P-value for CorrOctSM_SR. Significant correlations have p-value < 0.05,
+CorrNovSM_RR,Correlation of basin-averaged mean November total soil moisture with observed spring runoff ratio over WY 1965-2018,
+PValue_CorrNovSMRR,P-value for CorrNovSM_RR. Significant correlations have p-value < 0.05,
+CorrNovSM_SR,Correlation of basin-averaged mean November total soil moisture with observed spring runoff over WY 1965-2018,
+PValue_CorrNovSMSR,P-value for CorrNovSM_SR. Significant correlations have p-value < 0.05,
+R2_Nov1SM_SR,Coefficient of determination for least-squares regression on basin-averaged November 1 total soil moisture and spring runoff over WY 1965-2018,
+R2_Nov1SM_RR,Coefficient of determination for least-squares regression on basin-averaged November 1 total soil moisture and spring runoff ratio over WY 1965-2018,
+R2_OctSM_SR,Coefficient of determination for least-squares regression on basin-averaged mean October total soil moisture and spring runoff over WY 1965-2018,
+R2_OctSM_RR,Coefficient of determination for least-squares regression on basin-averaged mean October total soil moisture and spring runoff ratio over WY 1965-2018,Y
+R2_NovSM_SR,Coefficient of determination for least-squares regression on basin-averaged mean November total soil moisture and spring runoff over WY 1965-2018,Y
+R2_NovSM_RR,Coefficient of determination for least-squares regression on basin-averaged mean November total soil moisture and spring runoff ratio over WY 1965-2018,Y
+AvgElevation,Taken from USGS Gages II dataset: mean watershed elevation from 100m National Elevation Dataset [unit: m],Y
+DrainageArea,"Total drainage area, taken from USGS Gages II dataset (USGS NAWQA, 30-m NHDPlus data), [unit: km^2]",Y
+SpringRunoffApr1,"Total spring runoff from April 1st to end of July, from observed USGS gage [mm] ",Y
+SpringRunoffPSWE_USGS,"Total spring runoff from date of peak SWEt to end of July, from observed USGS gage [mm] ",Y
+SpringRunoffRatio,"Spring runoff ratio: basin-averaged total observed spring runoff (date of peak SWE to July 31) / basin-averaged total winter and spring precipitation (NDJFMAJ), average for WY 1965-2018 [unit: none]",Y
+SpringRunoff7Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 7 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",Y
+SpringRunoff14Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 14 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",Y
+SpringRunoff21Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 21 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",Y
+SpringRunoff28Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 28 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",Y
+SpringRunoff35Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 35 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",Y
+SpringRunoff42Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 42 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",Y
+SpringRunoff49Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 49 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",Y
+SpringRunoff56Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 56 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",Y
+SpringRunoff63Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 63 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",Y
+SpringRunoff70Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 70 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",Y
+SpringRunoff77Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 77 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",
+SpringRunoff84Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 84 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",
+SpringRunoff91Days,"Basin-averaged total observed spring runoff from USGS gauge, from date of peak SWE to 91 days later, average for WY 1965-2018 [unit: mm]. (Sum of observed streamflow / Drainage Area)",
+MonthMaxRunoff,"Month over which maximum total observed runoff occurs over given water year, average for WY 1965-2018",
+WYMonthMaxRunoff,"Water year month over which maximum total observed runoff occurs over given water year, average for WY 1965-2018",
+CorrNovSM_SR90Days,Correlation of basin-averaged Nov 1 total soil moisture with SpringRunoff91Days over WY 1965-2018,
+PValue_CorrNovSMSR90Days,P-value for CorrNovSM_SR90Days. Significant correlations have p-value < 0.05,
+CorrJanSM_SR90Days,Correlation of basin-averaged Nov 1 total soil moisture with SpringRunoff91Days over WY 1965-2018,
+PValue_CorrJanSMSR90Days,P-value for CorrJanSM_SR90Days. Significant correlations have p-value < 0.05,
+CorrJanSM_SR,Correlation of basin-averaged Jan 1 total soil moisture with observed spring runoff over WY 1965-2018,
+PValue_CorrJanSMSR,P-value for CorrJanSM_SR. Significant correlations have p-value < 0.05,
+CorrJanSM_RR,Correlation of basin-averaged Jan 1 total soil moisture with observed spring runoff ratio over WY 1965-2018,
+PValue_CorrJanSMRR,P-value for CorrJanSM_RR. Significant correlations have p-value < 0.05,
+MissingYears,Number of years over period of record WY 1965-2018 with missing USGS streamflow data,
+Cluster,"Either cluster 1 or cluster 2, based on k-means clustering of soil moisture change in yearly data. Basin cluster is mode of yearly cluster types.",Y
+SpringRunoffPSWEApr30,"Total spring runoff from day of Peak SWE to Apr 30, from observed USGS gage [mm] ",Y
+SpringRunoffMay1May31,"Total spring runoff from May 1st to May 31st, from observed USGS gage [mm] ",Y
+SpringRunoffJun1Jun30,"Total spring runoff from Jun 1 to Jun 30, from observed USGS gage [mm] ",Y
+Snowout,Day of the water year when snow melts out; defined as the first day of the water year after peak SWE when SWE < 5 mm [unit: day],Y
+Snowmelt,"Average snowmelt rate for the water year, defined as: Peak SWE [mm] / (Snowout - DOWYPeakSWE) [day], [unit: mm/day]",Y
+PercCluster1,Percent of years in record that are categorized as cluster 1,

@@ -1,0 +1,131 @@
+rm(list=ls())
+#=================================================================
+#load libraries
+library(stringr)
+library(dplyr)
+library(ggplot2)
+library(wesanderson)
+library(viridis)
+library(gridExtra)
+library(grid)
+
+#=================================================================
+#user input
+sm_signif = 1 # 1: only when SM is significant predictor; 0: sm not necessarily significant predictor
+
+#=================================================================
+#directories
+wd = list()
+wd$data = 'D:/Project_soil_moisture/00_SM_project/01_data/'
+wd$figure = 'D:/Project_soil_moisture/00_SM_project/04_figure/'
+
+#=================================================================
+#Reading data
+if(sm_signif==1){
+  df = read.csv(paste0(wd$data,'PRE_SM_SWE_LT_stns_forElevBands_SM_signif_predictor.csv'))[,-1]
+}else{
+  df = read.csv(paste0(wd$data,'PRE_SM_SWE_LT_stns_forElevBands.csv'))[,-1]
+}
+
+#selecting specific columns
+df = data.frame(ID = df$gage_id,PRE = df$PRE, LT = df$Lead_time_month)
+
+id = unlist(gregexpr(pattern ='_',df$ID))
+df = cbind(df, gage = substr(df$ID,1,(id-1)),
+           elvLvl = substr(df$ID,(id+1),str_count(df$ID)))
+
+#elevation band to elevation in meter
+df$elvLvl = as.numeric(df$elvLvl)
+df$elvLvl = df$elvLvl*100-50 # average elevation
+
+#separating elevation above 2000 meter
+df = df[df$elvLvl>=2000,]
+
+#convert elevation column to factor
+df$elvLvl = as.factor(df$elvLvl)
+
+#=================================================================
+#reading general cluster type of the catchments
+df.gen = read.csv(paste0(wd$data, 'AvgInfo_SelectedBasins_Obs.csv'))
+tmp.df = read.csv(paste0(wd$data, 'AvgInfo_ElevBands2_tmp.csv'))
+
+#separating specific columns
+df.gen = data.frame(gage = df.gen$GAGEID, clust = df.gen$Cluster)
+df.gen$gage = as.character(df.gen$gage)
+tmp.df = data.frame(ID = tmp.df$ID, winT = tmp.df$AvgWinterTemp)
+tmp.df$ID = as.character(tmp.df$ID)
+
+#combine df and df.gen
+df = left_join(df,df.gen, by ='gage')
+df = left_join(df,tmp.df, by ='ID')
+head(df,3)
+
+#Select specific cluster type [need input]
+# df = df[df$clust==1,]
+df = df[is.na(df$clust)==T,]
+df = df[df$gage == 'Sierra Nevada',]
+df2 = df
+
+#ordering the data
+tmp = as.factor(c(1:4000))
+df = df[order(match(df$elvLvl, tmp)),]
+df$elvLvl = factor(as.character(df$elvLvl), levels = unique(df$elvLvl))
+
+# color scheme select for plot
+col.sel = wes_palette("Darjeeling1")#, 5, type = "continuous")
+
+#=================================================================
+#plot winter PRE vs temperature
+p = ggplot(df,aes(x = winT, y = PRE, group = as.factor(LT),color = as.factor(LT)))+
+  geom_line(size=1)+ #geom_line(aes(linetype = as.factor(LT)),size=1)+
+  geom_point()+
+  scale_color_manual(values = col.sel)+
+  xlab('Winter  temperature [°C]')+
+  ylab('PRE [%]')+
+  scale_y_continuous(breaks = seq(0, 30, by=5), limits=c(0,30),expand = c(0, 0))+
+  theme_bw()+
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=.5),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))+
+  scale_x_reverse(breaks = seq(1, -7, by=-1), limits=c(1,-7),expand = c(0, 0)) +
+  coord_flip()+
+  theme(legend.position = "none")
+grob <- grobTree(textGrob("(c)", x=0.01,  y=0.97, hjust=0,
+                          gp=gpar(col="black", fontsize=13, fontface="italic")))
+p = p + annotation_custom(grob)
+p
+
+
+#plot PRE vs elevation
+
+df$elvLvl = as.numeric(as.character(df$elvLvl))
+p2 = ggplot(df,aes(x = elvLvl , y = PRE, group = as.factor(LT),color = as.factor(LT)))+
+  geom_line(size=1)+
+  geom_point()+
+  scale_color_manual(values = col.sel)+
+  ylab('PRE [%]')+
+  xlab('Elevation [m]')+
+  scale_y_continuous(breaks = seq(0, 30, by=5), limits=c(0,30),expand = c(0, 0))+
+  scale_x_continuous(breaks = seq(2000, 3470, by=250), limits=c(2000,3470),expand = c(0, 0))+
+  theme_bw()+
+  theme(text = element_text(size=13),
+        axis.text.x = element_text(angle=0, hjust=.5),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))+
+  coord_flip()+
+  theme(legend.position = "none")
+
+grob <- grobTree(textGrob("(b)", x=0.01,  y=0.97, hjust=0,
+                          gp=gpar(col="black", fontsize=13, fontface="italic")))
+p2 = p2 + annotation_custom(grob)
+p2
+
+#combine both plots above using grid arrange
+p3 = grid.arrange(p2, p , 
+             ncol = 2, nrow = 1)
+
+#export plot in png
+ggsave(p3,filename=paste0(wd$figure,'Figure_9.png'), width = 18, height =9, units = 'cm')
+
+
