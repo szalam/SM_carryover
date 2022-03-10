@@ -7,3 +7,7 @@ THE Codes IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
 * Author: Sarfaraz Alam (szalam@stanford.edu), Stanford Univ Dept of Geophysics 
 * Description: This repository contains the codes for preprocessing, analysis, and figure preparation for the research. 
 * Data: Most data available in the 01_data folder. However, few large files are available at https://figshare.com/articles/dataset/The_role_of_antecedent_winter_soil_moisture_carryover_on_spring_runoff_predictability_in_snow-dominated_Western_U_S_catchments/19313774/1
+
+
+![alt text](https://github.com/szalam/SM_carryover/blob/master/04_figure/figure_3d.png)
+
