@@ -2,7 +2,7 @@ rm(list=ls())
 
 # Directories
 wd = list()
-wd$main = 'D:/Project_soil_moisture/00_SM_project/'
+wd$main = 'C:/sarfaraz/SM_carryover/'
 wd$data = paste0(wd$main,'01_data/')
 wd$fn = paste0(wd$main,'02_code/')
 wd$output = paste0(wd$main,'03_results/')
