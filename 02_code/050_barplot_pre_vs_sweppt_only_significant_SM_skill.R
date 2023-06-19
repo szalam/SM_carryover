@@ -5,9 +5,9 @@ library(ggplot2)
 
 # Directories
 wd = list()
-wd$main     = 'D:/Project_soil_moisture/00_SM_project/'
+wd$main     = 'C:/sarfaraz/SM_carryover/'
 wd$data     = paste0(wd$main,'01_data/')
-wd$raw_data = paste0(wd$main,'01_data/10_raw_data/')
+wd$raw_data = paste0(wd$main,'01_data/85_40NA/Runoff_Sel/')
 wd$output   = paste0(wd$main,'03_results/')
 wd$figure   = paste0(wd$main,'04_figure/')
 setwd(wd$data)
@@ -26,18 +26,17 @@ lmp <- function (modelobject) {
 #-------------------------------------------------------------------------
 #From the following text file I only use the station id and cluster number
 # pcor_df = read.table('pcor_sm_sr_sweFix.txt',header = T)
-pcor_df = read.table('08_pcor_sm_sr_sweFix.txt',header = T)
+pcor_df = read.csv(paste0('85_40NA/Csv_Files/','AvgInfo_Basins_Cluster_40NA_SMChangeClimate.csv'),header = T)
+pcor_df = pcor_df[c('GAGEID','ClusterMode')]
+# pcor_df = read.table('08_pcor_sm_sr_sweFix.txt',header = T)
 pcor_df[,2] = factor(pcor_df[,2])
 head(pcor_df)
 
 
-st_avg_info = read.csv(paste0(wd$data,'AvgInfo_SelectedBasins_Obs.csv'))
-clust.data = st_avg_info[,104]
-st_sel = c(st_avg_info[,3])
-k_val = c(pcor_df[,5])
-
-elev = read.table(paste0(wd$data,'08_elevation.txt'),
-                  header =T)
+st_avg_info = read.csv(paste0('85_40NA/Csv_Files/','AvgInfo_Basins_Cluster_40NA_SMChangeClimate.csv'))
+clust.data = st_avg_info$ClusterMode
+st_sel = c(st_avg_info$GAGEID)
+# k_val = c(pcor_df[,5])
 
 #read all data csv
 setwd(wd$raw_data)
@@ -68,10 +67,11 @@ for(n in 1:5){
     
     # df_high = read.csv(paste0('Variables_',st_sel[2],'.csv'))
     
-    df_low = df_low[,c(5,8,12,13,10,20,55,50,51,52,53)]
+    # df_low = df_low[,c(5,8,12,13,10,20,55,50,51,52,53)]
+    df_low = df_low[c('SpringRunoffApr1','Nov1SM','Dec1SM','Jan1SM','Feb1SM','Mar1SM','PeakSWE','PeakSWE_PrecipRatio')]
     head(df_low,1)
     
-    id_nan = which(is.nan(as.numeric(df_low[,7]))==T)
+    id_nan = which(is.nan(as.numeric(df_low[,'SpringRunoffApr1']))==T)
     
     if(length(id_nan >0)){
       df_low = df_low[-id_nan,]
@@ -119,7 +119,7 @@ for(n in 1:5){
     PRE = (deviance(model2)-deviance(model))/deviance(model2)
     pre_all = c(pre_all, PRE)
     
-    var_means = rbind(var_means,  c(colMeans(df_low),n))
+    var_means = rbind(var_means,  c(colMeans(df_low),LT = n))
     
     clust.all = c(clust.all, clust.data[i])
     
@@ -129,7 +129,7 @@ for(n in 1:5){
 }
 
 pre_all = pre_all[-1]
-var_means = var_means[-1,]
+var_means = data.frame(var_means[-1,])
 r2_all = r2_all[-1,]
 clust.all = clust.all[-1]
 st_high = st_high[-1]
@@ -139,7 +139,7 @@ id_rm = id_rm[-1]
 colnames(r2_all) =c('with_SM','without_sm','LT')
 # write.csv(r2_all, paste0(wd$output,'/2_r2_MLR_SR_SWE_SM.csv'))
 
-swe_ppt_rat = var_means[,3]/var_means[,4]
+swe_ppt_rat = var_means$PeakSWE_PrecipRatio #var_means[,3]/var_means[,4]
 swe_ppt_rat = cbind(swe_ppt_rat,'temp')
 swe_ppt_rat[,1] = as.numeric(as.character(swe_ppt_rat[,1]))
 swe_ppt_rat[which(swe_ppt_rat[,1]<.3),2] = 'SWE/P < 30%'
@@ -148,7 +148,7 @@ swe_ppt_rat = data.frame(swe_ppt_rat)
 colnames(swe_ppt_rat) = c('Ratio','Regime')
 
 # Process dataframe for plotting
-df_plot = data.frame(Regime = swe_ppt_rat[,2],value = pre_all*100, LT = factor(var_means[,12]))
+df_plot = data.frame(Regime = swe_ppt_rat$Ratio,value = pre_all*100, LT = factor(var_means$LT))
 
 
 av_wint_T = clust.all#var_means[,5]
@@ -162,7 +162,7 @@ av_wint_T[which(av_wint_T[,1]==2),2] = 'Maritime'# av_wint_T[which(av_wint_T[,1]
 colnames(av_wint_T) = c('Ratio','Regime')
 
 
-df_plot2 = data.frame(Regime = av_wint_T[,2],value = pre_all*100, LT = factor(var_means[,12]))
+df_plot2 = data.frame(Regime = av_wint_T$Regime,value = pre_all*100, LT = factor(var_means$LT))
 
 df_plot2[df_plot2$value>=20,]
 # Ordering data in specific sequence we are interested. Maritime to Interior. LT 5 to 1

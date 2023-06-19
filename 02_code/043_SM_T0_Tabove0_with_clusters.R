@@ -22,7 +22,7 @@ wd$figure = paste0(wd$main, '04_figure/')
 setwd(wd$data)
 
 # Read data
-data = read.csv(paste0('85_40NA/Csv_Files/AvgInfo_Basins_Cluster_40NA.csv'), header = TRUE, fill = TRUE)
+data = read.csv(paste0('85_40NA/Csv_Files/AvgInfo_Basins_Cluster_40NA_SMChangeClimate.csv'), header = TRUE, fill = TRUE)
 
 head(data, 1)
 

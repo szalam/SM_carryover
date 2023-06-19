@@ -6,11 +6,12 @@ library(dplyr)
 
 # Directories
 wd = list()
-wd$main     = 'D:/Project_soil_moisture/00_SM_project/'
-wd$data     = paste0(wd$main,'01_data/')
-wd$raw_data = paste0(wd$main,'01_data/10_raw_data/')
-wd$output   = paste0(wd$main,'03_results/')
-wd$figure   = paste0(wd$main,'04_figure/')
+wd$main = 'C:/sarfaraz/SM_carryover/'
+wd$data = paste0(wd$main, '01_data/')
+wd$raw_data = paste0(wd$main,'01_data/85_40NA/Runoff_Sel/')
+wd$output = paste0(wd$main, '03_results/')
+wd$figure = paste0(wd$main, '04_figure/')
+
 setwd(wd$data)
 
 #flag to include precipitation in the PRE calculation
@@ -30,18 +31,14 @@ lmp <- function (modelobject) {
 #-------------------------------------------------------------------------
 #From the following text file I only use the station id and cluster number
 # pcor_df = read.table('pcor_sm_sr_sweFix.txt',header = T)
-pcor_df = read.table('08_pcor_sm_sr_sweFix.txt',header = T)
-pcor_df[,2] = factor(pcor_df[,2])
-head(pcor_df)
+# pcor_df = read.table('08_pcor_sm_sr_sweFix.txt',header = T)
+# pcor_df[,2] = factor(pcor_df[,2])
+# head(pcor_df)
 
 
-st_avg_info = read.csv(paste0(wd$data,'AvgInfo_SelectedBasins_Obs.csv'))
-clust.data = st_avg_info[,104]
-st_sel = c(st_avg_info[,3])
-k_val = c(pcor_df[,5])
-
-elev = read.table(paste0(wd$data,'08_elevation.txt'),
-                  header =T)
+st_avg_info = read.csv(paste0('85_40NA/Csv_Files/AvgInfo_Basins_Cluster_40NA_SMChangeClimate.csv'), header = TRUE, fill = TRUE)
+clust.data = st_avg_info$ClusterMode
+st_sel = st_avg_info$GAGEID
 
 #read all data csv
 setwd(wd$raw_data)
@@ -50,7 +47,6 @@ pre_all = var_means = id_rm = r2_all = clust.all = st_high = st_all = rmse_w_sm 
 
 #Loop through the 5 lead times (LT)
 #--------------------------------------------------------------------------
-# for(i in 1:nrow(pcor_df)){
 for(n in 1:5){
   for(i in 1:length(st_sel)){
     
@@ -72,7 +68,7 @@ for(n in 1:5){
     
     # df_high = read.csv(paste0('Variables_',st_sel[2],'.csv'))
     
-    df_low = df_low[,c(5,8,12,13,10,20,55,50,51,52,53)]
+    df_low = df_low[c('SpringRunoffApr1','Nov1SM','Dec1SM','Jan1SM','Feb1SM','Mar1SM','PeakSWE','PeakSWE_PrecipRatio')]
     head(df_low,1)
     
     id_nan = which(is.nan(as.numeric(df_low[,7]))==T)
