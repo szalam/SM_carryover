@@ -11,6 +11,7 @@ rm(list = ls())
 library(lubridate)
 library(ggplot2)
 library(reshape2)
+library(dplyr)
 
 # Directories
 wd = list()
@@ -57,6 +58,15 @@ p1 = ggplot(mdat, aes(x = Regime, y = value, fill = Regime)) +
 
 ggsave(p1, filename = paste0(wd$figure, "05_DOWY_T_below_0C.png"), width = 14, height = 15, units = "cm")
 
+result <- mdat %>%
+  group_by(Regime) %>%
+  summarise(
+    Mean = mean(value, na.rm = TRUE),
+    StandardDeviation = sd(value, na.rm = TRUE)
+  )
+
+print(result)
+
 # Plot: Days below 0-degrees
 df.tmp = df[, c(5, 11)]
 
@@ -72,7 +82,17 @@ p2 = ggplot(mdat, aes(x = Regime, y = value, fill = Regime)) +
   scale_fill_manual(values = c("skyblue3", "orangered2")) +
   guides(fill = guide_legend(title = "Regime"))
 
+p2
 ggsave(p2, filename = paste0(wd$figure, "05_days_T_below_0C.png"), width = 14, height = 15, units = "cm")
+
+result <- mdat %>%
+  group_by(Regime) %>%
+  summarise(
+    Mean = mean(value, na.rm = TRUE),
+    StandardDeviation = sd(value, na.rm = TRUE)
+  )
+
+print(result)
 
 # Plot: SM pre 0-degree vs post 0-degree
 df.tmp = df[, c(8, 9, 11)]
@@ -88,6 +108,14 @@ p3 = ggplot(df.tmp, aes(x = SM_0TempDay, y = SM_PosTempDay, color = Regime)) +
   scale_fill_manual(values = c("skyblue3", "orangered2")) +
   scale_y_continuous(breaks = seq(200, 1300, by = 200), limits = c(200, 1300)) +
   scale_x_continuous(breaks = seq(200, 1300, by = 200), limits = c(200, 1300))
+p3
+
+# Calculating correlation by Regime
+correlation_by_regime <- df.tmp %>%
+  group_by(Regime) %>%
+  summarize(Correlation = cor(SM_0TempDay, SM_PosTempDay, use = "complete.obs"))
+
+print(correlation_by_regime)
 
 ggsave(p3, filename = paste0(wd$figure, "05_SM_pre_post_below_0C.png"), width = 17, height = 15, units = "cm")
 

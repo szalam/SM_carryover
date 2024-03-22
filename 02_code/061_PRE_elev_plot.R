@@ -14,10 +14,13 @@ library(grid)
 sm_signif = 1 # 1: only when SM is significant predictor; 0: sm not necessarily significant predictor
 
 #=================================================================
-#directories
+# Directories
 wd = list()
-wd$data = 'D:/Project_soil_moisture/00_SM_project/01_data/'
-wd$figure = 'D:/Project_soil_moisture/00_SM_project/04_figure/'
+wd$main = 'C:/sarfaraz/SM_carryover/'
+wd$data = paste0(wd$main, '01_data/')
+wd$raw_data = paste0(wd$main,'01_data/85_40NA/Runoff_Sel/')
+wd$output = paste0(wd$main, '03_results/')
+wd$figure = paste0(wd$main, '04_figure/')
 
 #=================================================================
 #Reading data
@@ -80,16 +83,16 @@ p = ggplot(df,aes(x = winT, y = PRE, group = as.factor(LT),color = as.factor(LT)
   geom_line(size=1)+ #geom_line(aes(linetype = as.factor(LT)),size=1)+
   geom_point()+
   scale_color_manual(values = col.sel)+
-  xlab('Winter  temperature [°C]')+
+  xlab('Winter  temperature [Â°C]')+
   ylab('PRE [%]')+
   scale_y_continuous(breaks = seq(0, 30, by=5), limits=c(0,30),expand = c(0, 0))+
   theme_bw()+
-  theme(text = element_text(size=13),
+  theme(text = element_text(size=15),
         axis.text.x = element_text(angle=0, hjust=.5),
         plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5))+
   scale_x_reverse(breaks = seq(1, -7, by=-1), limits=c(1,-7),expand = c(0, 0)) +
-  coord_flip()+
+  # coord_flip()+
   theme(legend.position = "none")
 grob <- grobTree(textGrob("(c)", x=0.01,  y=0.97, hjust=0,
                           gp=gpar(col="black", fontsize=13, fontface="italic")))
@@ -109,11 +112,11 @@ p2 = ggplot(df,aes(x = elvLvl , y = PRE, group = as.factor(LT),color = as.factor
   scale_y_continuous(breaks = seq(0, 30, by=5), limits=c(0,30),expand = c(0, 0))+
   scale_x_continuous(breaks = seq(2000, 3470, by=250), limits=c(2000,3470),expand = c(0, 0))+
   theme_bw()+
-  theme(text = element_text(size=13),
+  theme(text = element_text(size=15),
         axis.text.x = element_text(angle=0, hjust=.5),
         plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5))+
-  coord_flip()+
+  # coord_flip()+
   theme(legend.position = "none")
 
 grob <- grobTree(textGrob("(b)", x=0.01,  y=0.97, hjust=0,
@@ -126,6 +129,6 @@ p3 = grid.arrange(p2, p ,
              ncol = 2, nrow = 1)
 
 #export plot in png
-ggsave(p3,filename=paste0(wd$figure,'Figure_9.png'), width = 18, height =9, units = 'cm')
+ggsave(p3,filename=paste0(wd$figure,'Figure_9_2.png'), width = 22, height =10, units = 'cm')
 
 

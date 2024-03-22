@@ -2,6 +2,7 @@ rm(list=ls())
 
 # Libraries
 library(ggplot2)
+library(dplyr)
 
 # Directories
 wd = list()
@@ -41,7 +42,7 @@ st_sel = c(st_avg_info$GAGEID)
 #read all data csv
 setwd(wd$raw_data)
 file_list = list.files()
-pre_all = var_means = id_rm = r2_all = clust.all = st_high = 0
+pre_all = var_means = id_rm = r2_all = clust.all = st_high = RMSE_wout_sm = RMSE_wt_sm = RMSE_diff = 0
 
 #Loop through the 5 lead times (LT)
 #--------------------------------------------------------------------------
@@ -103,6 +104,18 @@ for(n in 1:5){
     r2_all = rbind(r2_all, c(sum_model$adj.r.squared, sum_model2$adj.r.squared,n))
 
     
+    # Calculate RMSE for model
+    residuals_model <- residuals(model)  # Extract residuals from the model
+    RMSE_model <- sqrt(mean(residuals_model^2))  # Calculate RMSE
+    
+    # Calculate RMSE for model2
+    residuals_model2 <- residuals(model2)  # Extract residuals from model2
+    RMSE_model2 <- sqrt(mean(residuals_model2^2))  # Calculate RMSE
+    
+    RMSE_wout_sm = c(RMSE_wout_sm, RMSE_model2)
+    RMSE_wt_sm = c(RMSE_wt_sm, RMSE_model)
+    RMSE_diff = c(RMSE_diff,RMSE_model2-RMSE_model) 
+    
     # Get the Intercept and coefficients as vector elements.
     cat("# # # # The Coefficient Values # # # ","\n")
     
@@ -123,7 +136,10 @@ for(n in 1:5){
     
     clust.all = c(clust.all, clust.data[i])
     
-    if(PRE>=.2){st_high = c(st_high,st_sel[i])}
+    if(PRE>=.2){
+      st_high = c(st_high,st_sel[i])
+      
+      }
   }
   
 }
@@ -134,10 +150,18 @@ r2_all = r2_all[-1,]
 clust.all = clust.all[-1]
 st_high = st_high[-1]
 id_rm = id_rm[-1]
+RMSE_wout_sm = RMSE_wout_sm[-1]
+RMSE_wt_sm = RMSE_wt_sm[-1]
+RMSE_diff = RMSE_diff[-1]
 
+max(pre_all)
+min(pre_all)
+print(median(RMSE_wout_sm))
+print(median(RMSE_wt_sm))
+print(median(RMSE_diff))
 
 colnames(r2_all) =c('with_SM','without_sm','LT')
-# write.csv(r2_all, paste0(wd$output,'/2_r2_MLR_SR_SWE_SM.csv'))
+write.csv(r2_all, paste0(wd$output,'/2_r2_MLR_SR_SWE_SM.csv'))
 
 swe_ppt_rat = var_means$PeakSWE_PrecipRatio #var_means[,3]/var_means[,4]
 swe_ppt_rat = cbind(swe_ppt_rat,'temp')
@@ -185,7 +209,7 @@ p = ggplot(df_plot2, aes(x=Regime, y=value, fill = LT)) +
         axis.title=element_text(size=14,face="bold"))+
   xlab(" ") + ylab("PRE [%]")+#ylab("Correlation")+
   # scale_x_discrete(labels=c("correlation" = "Pearson correlation", "partial_correlation" = "Partial correlation"))+
-  ylim(0,40)+
+  # ylim(0,40)+
   scale_fill_brewer(palette="Blues")+
   guides(fill=guide_legend(title="LT (months)"))
 
@@ -194,6 +218,61 @@ p
 # Export figure
 ggsave(p,filename=paste0(wd$figure,"08_PRE_vs_intcoast_nosprppt.png",sep=""),
        width = 20, height = 15, units = "cm")
+
+
+# Counting number of values under each Regime
+count_by_regime <- df_plot2 %>%
+  group_by(Regime) %>%
+  summarise(Count = n())
+
+print(count_by_regime)
+
+# Counting number of values for each Regime and LT combination
+count_by_regime_lt <- df_plot2 %>%
+  group_by(Regime, LT) %>%
+  summarise(Count = n())
+
+print(count_by_regime_lt)
+
+df_plot2 %>% 
+  group_by(Regime,LT) %>% 
+  summarise(Meanpre = median(value))
+
+# Mean PRE difference between maritime and interior
+df_plot2 %>% 
+  group_by(Regime) %>% 
+  summarise(Meanpre = mean(value))
+
+#----------------------------------------------------------------------------------------
+# Is there a statistically significant difference between Maritime and Interior?
+#----------------------------------------------------------------------------------------
+# Independent samples t-test
+t_test_result <- t.test(value ~ Regime, data = df_plot2, subset = Regime %in% c("Maritime", "Interior"))
+
+# Print the result
+print(t_test_result)
+
+#----------------------------------------------------------------------------------------
+# Is there a statistically significant difference between different LT values for Interior basins?
+#----------------------------------------------------------------------------------------
+# Subset data for Interior regime and LT=1 and LT=5
+interior_lt1 <- subset(df_plot2, Regime == 'Interior' & LT == 1)$value
+interior_lt5 <- subset(df_plot2, Regime == 'Interior' & LT == 5)$value
+
+# Perform t-test for LT=1 vs LT=5
+t_test_result_1_5 <- t.test(interior_lt1, interior_lt5)
+
+# Print the result
+print(t_test_result_1_5)
+
+# Repeat the process for LT=2 vs LT=5
+interior_lt2 <- subset(df_plot2, Regime == 'Interior' & LT == 2)$value
+
+# Perform t-test for LT=2 vs LT=5
+t_test_result_2_5 <- t.test(interior_lt2, interior_lt5)
+
+# Print the result
+print(t_test_result_2_5)
 
 
 # Prepare data for correlation plot
@@ -221,8 +300,23 @@ p2 = ggplot(df_plot3, aes(x=r2_withSM, y=r2_withoutSM, fill = Regime)) +
   ylim(0,1)+ xlim(0,1)+
   scale_fill_manual(values=c( "skyblue3", "orangered2"))
 
+p2
+
 # Export image
-ggsave(p2,filename=paste0(wd$figure,"08_R2_compare_scatterplot_no_sprPPT.png",sep=""),
+ggsave(p2,filename=paste0(wd$figure,"R2_compare_scatterplot_no_sprPPT.png",sep=""),
        width = 20, height = 15, units = "cm")
 
+df_plot3$del_Rsq = ((df_plot3$r2_withSM - df_plot3$r2_withoutSM))
+mean(df_plot3$del_Rsq)
 
+df_plot3 %>% 
+  group_by(Regime) %>% 
+  summarise(MeanRsq = mean(del_Rsq))
+
+df_plot3 %>% 
+  group_by(Regime) %>% 
+  summarise(Mean_r2_withSM = mean(r2_withSM))
+
+df_plot3 %>% 
+  group_by(Regime) %>% 
+  summarise(Mean_r2_withoutSM = mean(r2_withoutSM))
